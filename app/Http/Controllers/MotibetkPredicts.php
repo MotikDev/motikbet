@@ -105,7 +105,6 @@ class MotibetkPredicts extends Controller
         $exp = explode("-",$str);
         $date = $exp[2].'-'.$exp[0].'-'.$exp[1];
         // dd($newStr);
-
         
         $winnings = Winning::whereDate('created_at', $date)->orderBy('match_time')->get();
         $overs = OverUnder::whereDate('created_at', $date)->orderBy('match_time')->get();
@@ -114,14 +113,9 @@ class MotibetkPredicts extends Controller
         $shotsOnTarget = ShotOnTarget::whereDate('created_at', $date)->orderBy('match_time')->get();
         $Fouls = MFoul::whereDate('created_at', $date)->orderBy('match_time')->get();
         
-        
-        
-        
-        // $string = file_get_contents(asset('countries.json'));
         $string = file_get_contents(public_path('countries.json'));
         $decodedJson = json_decode($string);
         
-       
         foreach($winnings as $winning){
             $code = '';
             foreach($decodedJson->result as $key => $value){
