@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motikbet - Predictions from match lineup</title>
     <meta http-equiv="refresh" content="1800">
-    <link rel="stylesheet" href="{{asset('css/app.css')}}" media="print" onload="this.media='all'; this.onload=null;">
+    <!-- <link rel="stylesheet" href="{{asset('css/app.css')}}" media="print" onload="this.media='all'; this.onload=null;"> -->
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <noscript><link rel="stylesheet" href="{{asset('css/app.css')}}"></noscript>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -272,6 +273,60 @@
         <div class="row mt-5">
             <div class="col">
                 <h3 class="text-center">
+                    Shot-on-target Predictions
+                    <small>
+                        <sup class="badge badge-pill badge-success small">90%</sup>
+                        <!-- <sup class="badge badge-pill badge-warning small">80%</sup> -->
+                    </small>
+                </h3>
+                <table class="mx-auto table-light w-100">
+                    <thead class="bg-primary text-white text-center mx-auto">
+                        <tr style="font-size: 1rem">
+                            <th class="d-none d-lg-table-cell p-3">S/N</th>
+                            <th>Time</th>
+                            <th class="d-none d-lg-table-cell">Country</th>
+                            <th class="d-none d-lg-table-cell">League</th>
+                            <th>Match</th>
+                            <th>Prediction</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ( $shotsOnTarget as $index => $over)
+                            <tr>
+                                <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
+                                <td class="text-center">
+                                    <div>
+                                        <img src="https://www.countryflags.io/{{$over->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
+                                    </div>
+                                    {{ substr($over->match_time, 0, 5) }}
+                                </td>
+                                <td class="text-center d-none d-lg-table-cell">{{ $over->country }}</td>
+                                <td class="text-center d-none d-lg-table-cell">{{ $over->league }}</td>
+                                <td class="text-center">
+                                    <div>
+                                        {{ $over->home_team }} 
+                                    </div>
+                                    <div>
+                                        Vs
+                                    </div>
+                                    <div>
+                                        {{ $over->away_team }}
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ $over->total_shot_on_target }}</td>
+                                <td class="text-center">{{ $over->result }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row mt-5">
+            <div class="col">
+                <h3 class="text-center">
                     Shot Predictions
                     <small>
                         <sup class="badge badge-pill badge-warning small">80%</sup>
@@ -320,6 +375,7 @@
                 </table>
             </div>
         </div>
+
 
         <div class="row mt-5">
             <div class="col">

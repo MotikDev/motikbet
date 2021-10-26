@@ -9,6 +9,7 @@ use App\OverUnder;
 use App\BTTS;
 use App\MShot;
 use App\MFoul;
+use App\ShotOnTarget;
 
 class MotibetkPredicts extends Controller
 {
@@ -27,11 +28,13 @@ class MotibetkPredicts extends Controller
         $overs = OverUnder::whereDate('created_at', $date)->orderBy('match_time')->get();
         $bttss = BTTS::whereDate('created_at', $date)->orderBy('match_time')->get();
         $shots = MShot::whereDate('created_at', $date)->orderBy('match_time')->get();
+        $shotsOnTarget = ShotOnTarget::whereDate('created_at', $date)->orderBy('match_time')->get();
         $Fouls = MFoul::whereDate('created_at', $date)->orderBy('match_time')->get();
         
-        
-        $string = file_get_contents(asset('countries.json'));
+        // $string = public_path('countries.json');
+        $string = file_get_contents(public_path('countries.json'));
         $decodedJson = json_decode($string);
+        // dd($decodedJson);
         
        
         foreach($winnings as $winning){
@@ -63,6 +66,15 @@ class MotibetkPredicts extends Controller
             $btts->countryCode = $code;
         }
         foreach($shots as $shot){
+            $code = '';
+            foreach($decodedJson->result as $key => $value){
+                if($value->name == $shot->country){
+                    $code = $value->code;
+                }
+            }
+            $shot->countryCode = $code;
+        }
+        foreach($shotsOnTarget as $shot){
             $code = '';
             foreach($decodedJson->result as $key => $value){
                 if($value->name == $shot->country){
@@ -82,7 +94,7 @@ class MotibetkPredicts extends Controller
         }
         
         $date = date('Y-m-d');
-        return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('fouls', $Fouls)->with('date', $date);
+        return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('shotsOnTarget', $shotsOnTarget)->with('fouls', $Fouls)->with('date', $date);
     }
     
     public function checker(Request $request, $date){
@@ -99,12 +111,14 @@ class MotibetkPredicts extends Controller
         $overs = OverUnder::whereDate('created_at', $date)->orderBy('match_time')->get();
         $bttss = BTTS::whereDate('created_at', $date)->orderBy('match_time')->get();
         $shots = MShot::whereDate('created_at', $date)->orderBy('match_time')->get();
+        $shotsOnTarget = ShotOnTarget::whereDate('created_at', $date)->orderBy('match_time')->get();
         $Fouls = MFoul::whereDate('created_at', $date)->orderBy('match_time')->get();
         
         
         
         
-        $string = file_get_contents(asset('countries.json'));
+        // $string = file_get_contents(asset('countries.json'));
+        $string = file_get_contents(public_path('countries.json'));
         $decodedJson = json_decode($string);
         
        
@@ -145,6 +159,15 @@ class MotibetkPredicts extends Controller
             }
             $shot->countryCode = $code;
         }
+        foreach($shotsOnTarget as $shot){
+            $code = '';
+            foreach($decodedJson->result as $key => $value){
+                if($value->name == $shot->country){
+                    $code = $value->code;
+                }
+            }
+            $shot->countryCode = $code;
+        }
         foreach($Fouls as $foul){
             $code = '';
             foreach($decodedJson->result as $key => $value){
@@ -156,7 +179,8 @@ class MotibetkPredicts extends Controller
         }
         
 
-        return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('fouls', $Fouls)->with('date', $date);
+        return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('shotsOnTarget', $shotsOnTarget)->with('fouls', $Fouls)->with('date', $date);
+        // return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('fouls', $Fouls)->with('date', $date);
     }
 
 }
