@@ -148,7 +148,7 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         // $date = date('Y-m-d');
         $qDate = Carbon::today();
-        $matches = Analysis::whereDate('created_at', $date->subDays(1))->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $date)->orderBy('match_time')->get();
         // $matches = Analysis::whereDate('created_at', $date)->get();
 
         foreach($matches as $match){
