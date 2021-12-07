@@ -27,8 +27,8 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         $date = date('Y-m-d');
         $qDate = Carbon::today();
-        // $matches = Analysis::whereDate('created_at', $qDate->subDays(1))->orderBy('match_time')->get();
-        $matches = Analysis::whereDate('created_at', $qDate->subDays(0))->get();
+        $matches = Analysis::whereDate('created_at', $qDate->subDays(1))->orderBy('match_time')->get();
+        // $matches = Analysis::whereDate('created_at', $qDate->subDays(0))->get();
 
         foreach($matches as $match){
             $code = '';
@@ -148,8 +148,8 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         // $date = date('Y-m-d');
         $qDate = Carbon::today();
-        // $matches = Analysis::whereDate('created_at', $date->subDays(1))->orderBy('match_time')->get();
-        $matches = Analysis::whereDate('created_at', $date)->get();
+        $matches = Analysis::whereDate('created_at', $date->subDays(1))->orderBy('match_time')->get();
+        // $matches = Analysis::whereDate('created_at', $date)->get();
 
         foreach($matches as $match){
             $code = '';
