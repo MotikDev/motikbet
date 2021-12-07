@@ -10,6 +10,7 @@ use App\BTTS;
 use App\MShot;
 use App\MFoul;
 use App\ShotOnTarget;
+use App\Analysis;
 
 class MotibetkPredicts extends Controller
 {
@@ -22,159 +23,241 @@ class MotibetkPredicts extends Controller
     }
 
     public function index(){
-        $date = Carbon::today();
-        $winnings = Winning::whereDate('created_at', $date)->orderBy('match_time')->get();
-// dd($winnings);
-        $overs = OverUnder::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $bttss = BTTS::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $shots = MShot::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $shotsOnTarget = ShotOnTarget::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $Fouls = MFoul::whereDate('created_at', $date)->orderBy('match_time')->get();
-        
-        // $string = public_path('countries.json');
         $string = file_get_contents(public_path('countries.json'));
         $decodedJson = json_decode($string);
-        // dd($decodedJson);
-        
-       
-        foreach($winnings as $winning){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $winning->country){
-                    $code = $value->code;
-                }
-            }
-            $winning->countryCode = $code;
-        }
-        
-        foreach($overs as $over){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $over->country){
-                    $code = $value->code;
-                }
-            }
-            $over->countryCode = $code;
-        }
-        foreach($bttss as $btts){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $btts->country){
-                    $code = $value->code;
-                }
-            }
-            $btts->countryCode = $code;
-        }
-        foreach($shots as $shot){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $shot->country){
-                    $code = $value->code;
-                }
-            }
-            $shot->countryCode = $code;
-        }
-        foreach($shotsOnTarget as $shot){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $shot->country){
-                    $code = $value->code;
-                }
-            }
-            $shot->countryCode = $code;
-        }
-        foreach($Fouls as $foul){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $foul->country){
-                    $code = $value->code;
-                }
-            }
-            $foul->countryCode = $code;
-        }
-        
         $date = date('Y-m-d');
-        return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('shotsOnTarget', $shotsOnTarget)->with('fouls', $Fouls)->with('date', $date);
+        $qDate = Carbon::today();
+        // $matches = Analysis::whereDate('created_at', $qDate->subDays(1))->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $qDate->subDays(0))->get();
+
+        foreach($matches as $match){
+            $code = '';
+            foreach($decodedJson->result as $key => $value){
+                if($value->name == $match->country){
+                    $code = $value->code;
+                }
+            }
+            $match->countryCode = $code;
+        }
+        
+        $winnings = [];
+        $overs = [];
+        $bttss = [];
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_str) >= 2)
+                && ($val->away_str <= 1)
+                && ($val->home_atk >= 29)
+                && ($val->away_atk < 20)
+                && ($val->home_def > $val->away_def)
+                && ($val->h2h_winner >= 0)
+            ) {
+                $val->winning = "1";
+                $winnings[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->away_str) >= 1.5)
+                && ($val->home_str <= 1)
+                && ($val->away_atk >= 29)
+                && ($val->home_atk < 20)
+                && ($val->away_def > $val->home_def)
+                && ($val->h2h_winner <= 0)
+            ) {
+                $val->winning = "2";
+                $winnings[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                ($val->home_def < 7)
+                &&($val->away_def < 7)
+                && (($val->home_atk) >= 21)
+                && (($val->away_atk) >= 21)
+                && ($val->home_str > $val->away_str)
+            ) {
+                $val->btts = "BTTS";
+                $bttss[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->def_add) < 16)
+                && (($val->attack_add) > 49)
+                && (($val->home_atk > $val->away_atk))
+                && ($val->h2h_winner >= 0)
+                && ($val->away_atk >= 20.5)
+                && ($val->attack_diff < 24)
+            ) {
+                $val->over = "1 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_str) >= 2.5)
+                && ($val->home_atk > 30)
+                && ($val->away_def < 8)
+            ) {
+                $val->over = "2 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_atk) > 21)
+                && (($val->away_atk) > 21)
+                && (($val->home_atk - $val->away_atk) >= 9)
+                && ($val->home_str < $val->away_str)
+            ) {
+                $val->over = "3 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_atk) > 40)
+                && (($val->away_def) < 7)
+            ) {
+                $val->over = "4 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->attack_diff) < -10)
+                && ($val->away_atk < 40)
+                && ($val->home_def > 9)
+                && ($val->away_def > 9)
+            ) {
+                $val->over = "Under 3.5";
+                $overs[] = $val;
+            }
+        }
+
+        return view('homePage', ['date' => $date, 'winnings' => $winnings, 'overs' => $overs, 'bttss' => $bttss]);
     }
     
     public function checker(Request $request, $date){
-        // dd($date);
-        // $date = $request->input('dateChecker');
-        
         $str = $date;
         $exp = explode("-",$str);
         $date = $exp[2].'-'.$exp[0].'-'.$exp[1];
-        // dd($newStr);
-        
-        $winnings = Winning::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $overs = OverUnder::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $bttss = BTTS::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $shots = MShot::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $shotsOnTarget = ShotOnTarget::whereDate('created_at', $date)->orderBy('match_time')->get();
-        $Fouls = MFoul::whereDate('created_at', $date)->orderBy('match_time')->get();
         
         $string = file_get_contents(public_path('countries.json'));
         $decodedJson = json_decode($string);
-        
-        foreach($winnings as $winning){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $winning->country){
-                    $code = $value->code;
-                }
-            }
-            $winning->countryCode = $code;
-        }
-        
-        foreach($overs as $over){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $over->country){
-                    $code = $value->code;
-                }
-            }
-            $over->countryCode = $code;
-        }
-        foreach($bttss as $btts){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $btts->country){
-                    $code = $value->code;
-                }
-            }
-            $btts->countryCode = $code;
-        }
-        foreach($shots as $shot){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $shot->country){
-                    $code = $value->code;
-                }
-            }
-            $shot->countryCode = $code;
-        }
-        foreach($shotsOnTarget as $shot){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $shot->country){
-                    $code = $value->code;
-                }
-            }
-            $shot->countryCode = $code;
-        }
-        foreach($Fouls as $foul){
-            $code = '';
-            foreach($decodedJson->result as $key => $value){
-                if($value->name == $foul->country){
-                    $code = $value->code;
-                }
-            }
-            $foul->countryCode = $code;
-        }
-        
+        // $date = date('Y-m-d');
+        $qDate = Carbon::today();
+        // $matches = Analysis::whereDate('created_at', $date->subDays(1))->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $date)->get();
 
-        return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('shotsOnTarget', $shotsOnTarget)->with('fouls', $Fouls)->with('date', $date);
-        // return view('homePage')->with('winnings', $winnings)->with('overs', $overs)->with('bttss', $bttss)->with('shots', $shots)->with('fouls', $Fouls)->with('date', $date);
+        foreach($matches as $match){
+            $code = '';
+            foreach($decodedJson->result as $key => $value){
+                if($value->name == $match->country){
+                    $code = $value->code;
+                }
+            }
+            $match->countryCode = $code;
+        }
+        
+        $winnings = [];
+        $overs = [];
+        $bttss = [];
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_str) >= 2)
+                && ($val->away_str <= 1)
+                && ($val->home_atk >= 29)
+                && ($val->away_atk < 20)
+                && ($val->home_def > $val->away_def)
+                && ($val->h2h_winner >= 0)
+            ) {
+                $val->winning = "1";
+                $winnings[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->away_str) >= 1.5)
+                && ($val->home_str <= 1)
+                && ($val->away_atk >= 29)
+                && ($val->home_atk < 20)
+                && ($val->away_def > $val->home_def)
+                && ($val->h2h_winner <= 0)
+            ) {
+                $val->winning = "2";
+                $winnings[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                ($val->home_def < 7)
+                &&($val->away_def < 7)
+                && (($val->home_atk) >= 21)
+                && (($val->away_atk) >= 21)
+                && ($val->home_str > $val->away_str)
+            ) {
+                $val->btts = "BTTS";
+                $bttss[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->def_add) < 16)
+                && (($val->attack_add) > 49)
+                && (($val->home_atk > $val->away_atk))
+                && ($val->h2h_winner >= 0)
+                && ($val->away_atk >= 20.5)
+                && ($val->attack_diff < 24)
+            ) {
+                $val->over = "1 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_str) >= 2.5)
+                && ($val->home_atk > 30)
+                && ($val->away_def < 8)
+            ) {
+                $val->over = "2 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_atk) > 21)
+                && (($val->away_atk) > 21)
+                && (($val->home_atk - $val->away_atk) >= 9)
+                && ($val->home_str < $val->away_str)
+            ) {
+                $val->over = "3 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_atk) > 40)
+                && (($val->away_def) < 7)
+            ) {
+                $val->over = "4 - Over 2.5";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->attack_diff) < -10)
+                && ($val->away_atk < 40)
+                && ($val->home_def > 9)
+                && ($val->away_def > 9)
+            ) {
+                $val->over = "Under 3.5";
+                $overs[] = $val;
+            }
+        }
+
+        return view('homePage', ['date' => $date, 'winnings' => $winnings, 'overs' => $overs, 'bttss' => $bttss]);
     }
 
 }

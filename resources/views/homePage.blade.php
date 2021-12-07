@@ -38,7 +38,9 @@
         <div class="row mb-5">
             <div class="col mt-5">
                 <h3>
-                    Motikbet has higher accuracy than other prediction websites as we generate predictions from match lineups. That is why the algorithm (without any human influence) generates each prediction thirty (30) minutes before the match kickoff.
+                    You're welcome to Motikbet, we generate our predictions from team forms, strengths, and head-to-head. 
+                    No prediction is perfect, so, gamble with caution.
+                    {{-- Motikbet has higher accuracy than other prediction websites as we generate predictions from match lineups. That is why the algorithm (without any human influence) generates each prediction thirty (30) minutes before the match kickoff. --}}
                 </h3>
                 <!--<h3>Motikbet is different from other prediction websites as we generate predictions from match lineups. That is why the algorithm generates each prediction thirty (30) minutes before the match kickoff.</h3>-->
             </div>
@@ -82,7 +84,7 @@
         
         
 
-        @if (URL::current() == route('home'))
+        {{-- @if (URL::current() == route('home'))
             <div class="row mt-5">
                 <div class="col">
                     <h2 class="mx-auto text-center font-weight-bolder">Next prediction <span class="text-danger">may</span> be</h2>
@@ -92,13 +94,12 @@
     
             <div class="row mt-3">
                 <div class="col text-center">
-                    {{-- <span class="bg-danger text-white h3 py-3 pl-3" style="font-family: motikbetTimer; width:8rem; display: inline-block; overflow: hidden;"> --}}
                     <span class="bg-danger mx-auto text-white h2 p-3" style="font-family: motikbetTimer; width:8rem; display: inline-block; overflow: hidden;">
                         <span class="" id="timerM"></span>:<span class="" id="timerS"></span>
                     </span>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <div class="row mt-5">
             <div class="col">
@@ -121,35 +122,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ( $winnings as $index => $over)
+                        @foreach ( $winnings as $index => $winning)
                             <tr class="mb-3">
                                 <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
                                 <td class="text-center">
                                     <div>
-                                        <img src="https://www.countryflags.io/{{$over->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
+                                        <img src="https://www.countryflags.io/{{$winning->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
                                     </div>
-                                    {{ substr($over->match_time, 0, 5) }}
+                                    {{ substr($winning->match_time, 0, 5) }}
                                 </td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->country }}</td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->league }}</td>
+                                <td class="text-center d-none d-lg-table-cell">{{ $winning->country }}</td>
+                                <td class="text-center d-none d-lg-table-cell">{{ $winning->league }}</td>
                                 <td class="text-center">
                                     <div>
-                                        {{ $over->home_team }} 
-                                    </div>
-                                    <div>
-                                        Vs
-                                    </div>
-                                    <div>
-                                        {{ $over->away_team }}
+                                        {{ $winning->teams }} 
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $over->prediction }}</td>
-                                <td class="text-center">{{ $over->result }}</td>
+                                <td class="text-center">{{ $winning->winning }}</td>
+                                <td class="text-center">{{ $winning->result }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <small class="small">*Note: This is the best for rollover with the duration of two weeks.</small>
+                {{-- <small class="small">*Note: This is the best for rollover with the duration of two weeks.</small> --}}
             </div>
         </div>
         
@@ -190,22 +185,17 @@
                                 <td class="text-center d-none d-lg-table-cell">{{ $over->league }}</td>
                                 <td class="text-center">
                                     <div>
-                                        {{ $over->home_team }} 
-                                    </div>
-                                    <div>
-                                        Vs
-                                    </div>
-                                    <div>
-                                        {{ $over->away_team }}
+                                        {{ $over->teams }} 
+                                        {{-- {{ $over->away_team }} --}}
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $over->prediction }}</td>
+                                <td class="text-center">{{ $over->over }}</td>
                                 <td class="text-center">{{ $over->result }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <small class="small">*Note: This is good for stakers with large amount.</small>
+                {{-- <small class="small">*Note: This is good for stakers with large amount.</small> --}}
             </div>
         </div>
         
@@ -233,199 +223,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ( $bttss as $index => $over)
+                        @foreach ( $bttss as $index => $btts)
                             <tr>
                                 <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
                                 <td class="text-center">
                                     <div>
-                                        <img src="https://www.countryflags.io/{{$over->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
+                                        <img src="https://www.countryflags.io/{{$btts->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
                                     </div>
-                                    {{ substr($over->match_time, 0, 5) }}
+                                    {{ substr($btts->match_time, 0, 5) }}
                                 </td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->country }}</td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->league }}</td>
+                                <td class="text-center d-none d-lg-table-cell">{{ $btts->country }}</td>
+                                <td class="text-center d-none d-lg-table-cell">{{ $btts->league }}</td>
                                 <td class="text-center">
                                     <div>
-                                        {{ $over->home_team }} 
-                                    </div>
-                                    <div>
-                                        Vs
-                                    </div>
-                                    <div>
-                                        {{ $over->away_team }}
+                                        {{ $btts->teams }} 
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $over->prediction }}</td>
-                                <td class="text-center">{{ $over->result }}</td>
+                                <td class="text-center">{{ $btts->btts }}</td>
+                                <td class="text-center">{{ $btts->result }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <small class="small">*Note: This is good for stakers with large amount.</small>
-            </div>
-        </div>
-
-
-
-
-
-
-        <div class="row mt-5">
-            <div class="col">
-                <h3 class="text-center">
-                    Shot-on-target Predictions
-                    <small>
-                        <sup class="badge badge-pill badge-success small">90%</sup>
-                        <!-- <sup class="badge badge-pill badge-warning small">80%</sup> -->
-                    </small>
-                </h3>
-                <table class="mx-auto table-light w-100">
-                    <thead class="bg-primary text-white text-center mx-auto">
-                        <tr style="font-size: 1rem">
-                            <th class="d-none d-lg-table-cell p-3">S/N</th>
-                            <th>Time</th>
-                            <th class="d-none d-lg-table-cell">Country</th>
-                            <th class="d-none d-lg-table-cell">League</th>
-                            <th>Match</th>
-                            <th>Prediction</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ( $shotsOnTarget as $index => $over)
-                            <tr>
-                                <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
-                                <td class="text-center">
-                                    <div>
-                                        <img src="https://www.countryflags.io/{{$over->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
-                                    </div>
-                                    {{ substr($over->match_time, 0, 5) }}
-                                </td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->country }}</td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->league }}</td>
-                                <td class="text-center">
-                                    <div>
-                                        {{ $over->home_team }} 
-                                    </div>
-                                    <div>
-                                        Vs
-                                    </div>
-                                    <div>
-                                        {{ $over->away_team }}
-                                    </div>
-                                </td>
-                                <td class="text-center">{{ $over->total_shot_on_target }}</td>
-                                <td class="text-center">{{ $over->result }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
-        <div class="row mt-5">
-            <div class="col">
-                <h3 class="text-center">
-                    Shot Predictions
-                    <small>
-                        <sup class="badge badge-pill badge-warning small">80%</sup>
-                    </small>
-                </h3>
-                <table class="mx-auto table-light w-100">
-                    <thead class="bg-primary text-white text-center mx-auto">
-                        <tr style="font-size: 1rem">
-                            <th class="d-none d-lg-table-cell p-3">S/N</th>
-                            <th>Time</th>
-                            <th class="d-none d-lg-table-cell">Country</th>
-                            <th class="d-none d-lg-table-cell">League</th>
-                            <th>Match</th>
-                            <th>Prediction</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ( $shots as $index => $over)
-                            <tr>
-                                <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
-                                <td class="text-center">
-                                    <div>
-                                        <img src="https://www.countryflags.io/{{$over->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
-                                    </div>
-                                    {{ substr($over->match_time, 0, 5) }}
-                                </td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->country }}</td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->league }}</td>
-                                <td class="text-center">
-                                    <div>
-                                        {{ $over->home_team }} 
-                                    </div>
-                                    <div>
-                                        Vs
-                                    </div>
-                                    <div>
-                                        {{ $over->away_team }}
-                                    </div>
-                                </td>
-                                <td class="text-center">{{ $over->prediction }}</td>
-                                <td class="text-center">{{ $over->result }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
-        <div class="row mt-5">
-            <div class="col">
-                <h3 class="text-center">
-                    Foul Predictions
-                    <small>
-                        <sup class="badge badge-pill badge-success small">90%</sup>
-                    </small>
-                </h3>
-                <table class="mx-auto table-light w-100">
-                    <thead class="bg-primary text-white text-center mx-auto">
-                        <tr style="font-size: 1rem">
-                            <th class="d-none d-lg-table-cell p-3">S/N</th>
-                            <th>Time</th>
-                            <th class="d-none d-lg-table-cell">Country</th>
-                            <th class="d-none d-lg-table-cell">League</th>
-                            <th>Match</th>
-                            <th>Prediction</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ( $fouls as $index => $over)
-                            <tr class="mb-5 mt-5">
-                                <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
-                                <td class="text-center">
-                                    <div>
-                                        <img src="https://www.countryflags.io/{{$over->countryCode}}/flat/16.png" class="d-block d-md-none mx-auto" width="16" height="12">
-                                    </div>
-                                    {{ substr($over->match_time, 0, 5) }}
-                                </td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->country }}</td>
-                                <td class="text-center d-none d-lg-table-cell">{{ $over->league }}</td>
-                                <td class="text-center">
-                                    <div>
-                                        {{ $over->home_team }} 
-                                    </div>
-                                    <div>
-                                        Vs
-                                    </div>
-                                    <div>
-                                        {{ $over->away_team }}
-                                    </div>
-                                </td>
-                                <td class="text-center">{{ $over->prediction }}</td>
-                                <td class="text-center">{{ $over->result }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                {{-- <small class="small">*Note: This is good for stakers with large amount.</small> --}}
             </div>
         </div>
 
