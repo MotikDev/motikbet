@@ -27,9 +27,8 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         $date = date('Y-m-d');
         $qDate = Carbon::today();
-        $matches = Analysis::whereDate('created_at', $qDate)->orderBy('match_time')->get();
-        // $matches = Analysis::whereDate('created_at', $qDate->subDays(0))->get();
-
+        // $matches = Analysis::whereDate('created_at', $qDate)->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $qDate->subDays(2))->get();
         foreach($matches as $match){
             $code = '';
             foreach($decodedJson->result as $key => $value){
@@ -45,28 +44,63 @@ class MotibetkPredicts extends Controller
         $bttss = [];
         foreach ($matches as $row => $val) {
             if (
-                (($val->home_str) >= 2)
-                && ($val->away_str <= 1)
-                && ($val->home_atk >= 29)
-                && ($val->away_atk < 20)
+                ($val->home_opp_str > $val->away_str)
+                && ($val->home_atk > $val->away_atk)
                 && ($val->home_def > $val->away_def)
-                && ($val->h2h_winner >= 0)
+                && ($val->h2h_winner > 0)
+                && ($val->h2h_winner < 4)
+                && ($val->home_opp_str > 1)
+                && ($val->home_str >= 1.5)
+                && ($val->away_atk <= 20)
+                && ($val->away_opp_str < $val->home_str)
+                // (($val->home_str) >= 2)
+                // && ($val->away_str <= 1)
+                // && ($val->home_atk >= 29)
+                // && ($val->away_atk < 20)
+                // && ($val->home_def > $val->away_def)
+                // && ($val->h2h_winner >= 0)
+                // && ($val->home_opp_str > 1)
             ) {
-                $val->winning = "1";
-                $winnings[] = $val;
+                if ((($val->home_atk - $val->away_atk) > 8) && ($val->home_atk > 29)) {
+                    $val->winning = "1";
+                    $winnings[] = $val;
+                } else {
+                    $val->winning = "1X";
+                    $winnings[] = $val;
+                }
+                
+                // $val->winning = "1";
+                // $winnings[] = $val;
             }
         }
         foreach ($matches as $row => $val) {
             if (
-                (($val->away_str) >= 1.5)
-                && ($val->home_str <= 1)
-                && ($val->away_atk >= 29)
-                && ($val->home_atk < 20)
+                ($val->away_opp_str > $val->home_str)
+                && ($val->away_atk > $val->home_atk)
                 && ($val->away_def > $val->home_def)
-                && ($val->h2h_winner <= 0)
+                && ($val->h2h_winner < 0)
+                && ($val->h2h_winner > -4)
+                && ($val->away_opp_str > 1)
+                && ($val->away_str >= 1.5)
+                && ($val->home_atk <= 20)
+                && ($val->home_opp_str < $val->away_str)
+                // (($val->away_str) >= 1.5)
+                // && ($val->home_str <= 1)
+                // && ($val->away_atk >= 29)
+                // && ($val->home_atk < 20)
+                // && ($val->away_def > $val->home_def)
+                // && ($val->h2h_winner <= 0)
+                // && ($val->away_opp_str > 1)
             ) {
-                $val->winning = "2";
-                $winnings[] = $val;
+                if ((($val->away_atk - $val->home_atk) > 8) && ($val->away_atk > 29)) {
+                    $val->winning = "2";
+                    $winnings[] = $val;
+                } else {
+                    $val->winning = "2X";
+                    $winnings[] = $val;
+                }
+                // $val->winning = "2";
+                // $winnings[] = $val;
             }
         }
         foreach ($matches as $row => $val) {
@@ -77,7 +111,7 @@ class MotibetkPredicts extends Controller
                 && (($val->away_atk) >= 21)
                 && ($val->home_str > $val->away_str)
             ) {
-                $val->btts = "BTTS";
+                $val->btts = "BTTS 90%";
                 $bttss[] = $val;
             }
         }
@@ -90,7 +124,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_atk >= 20.5)
                 && ($val->attack_diff < 24)
             ) {
-                $val->over = "1 - Over 2.5";
+                $val->over = "1 - Over 2.5 80%";
                 $overs[] = $val;
             }
         }
@@ -100,7 +134,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_atk > 30)
                 && ($val->away_def < 8)
             ) {
-                $val->over = "2 - Over 2.5";
+                $val->over = "2 - Over 2.5 90%";
                 $overs[] = $val;
             }
         }
@@ -111,7 +145,7 @@ class MotibetkPredicts extends Controller
                 && (($val->home_atk - $val->away_atk) >= 9)
                 && ($val->home_str < $val->away_str)
             ) {
-                $val->over = "3 - Over 2.5";
+                $val->over = "3 - Over 2.5 85%";
                 $overs[] = $val;
             }
         }
@@ -120,7 +154,7 @@ class MotibetkPredicts extends Controller
                 (($val->home_atk) > 40)
                 && (($val->away_def) < 7)
             ) {
-                $val->over = "4 - Over 2.5";
+                $val->over = "4 - Over 2.5 95%";
                 $overs[] = $val;
             }
         }
