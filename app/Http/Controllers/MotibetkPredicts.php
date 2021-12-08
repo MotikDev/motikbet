@@ -138,17 +138,8 @@ class MotibetkPredicts extends Controller
                 && ($val->away_atk >= 20.5)
                 && ($val->attack_diff < 24)
             ) {
-                $val->over = "1 - Over 2.5 80%";
-                $overs[] = $val;
-            }
-        }
-        foreach ($matches as $row => $val) {
-            if (
-                (($val->home_str) >= 2.5)
-                && ($val->home_atk > 30)
-                && ($val->away_def < 8)
-            ) {
-                $val->over = "2 - Over 2.5 90%";
+                // $val->over = "1 - Over 2.5 80%";
+                $val->over = "Over 2.5 80%";
                 $overs[] = $val;
             }
         }
@@ -159,7 +150,19 @@ class MotibetkPredicts extends Controller
                 && (($val->home_atk - $val->away_atk) >= 9)
                 && ($val->home_str < $val->away_str)
             ) {
-                $val->over = "3 - Over 2.5 85%";
+                // $val->over = "3 - Over 2.5 85%";
+                $val->over = "Over 2.5 85%";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_str) >= 2.5)
+                && ($val->home_atk > 30)
+                && ($val->away_def < 8)
+            ) {
+                // $val->over = "2 - Over 2.5 90%";
+                $val->over = "Over 2.5 90%";
                 $overs[] = $val;
             }
         }
@@ -168,7 +171,8 @@ class MotibetkPredicts extends Controller
                 (($val->home_atk) > 40)
                 && (($val->away_def) < 7)
             ) {
-                $val->over = "4 - Over 2.5 95%";
+                // $val->over = "4 - Over 2.5 95%";
+                $val->over = "Over 2.5 95%";
                 $overs[] = $val;
             }
         }
@@ -309,17 +313,8 @@ class MotibetkPredicts extends Controller
                 && ($val->away_atk >= 20.5)
                 && ($val->attack_diff < 24)
             ) {
-                $val->over = "1 - Over 2.5 80%";
-                $overs[] = $val;
-            }
-        }
-        foreach ($matches as $row => $val) {
-            if (
-                (($val->home_str) >= 2.5)
-                && ($val->home_atk > 30)
-                && ($val->away_def < 8)
-            ) {
-                $val->over = "2 - Over 2.5 90%";
+                // $val->over = "1 - Over 2.5 80%";
+                $val->over = "Over 2.5 80%";
                 $overs[] = $val;
             }
         }
@@ -330,7 +325,19 @@ class MotibetkPredicts extends Controller
                 && (($val->home_atk - $val->away_atk) >= 9)
                 && ($val->home_str < $val->away_str)
             ) {
-                $val->over = "3 - Over 2.5 85%";
+                // $val->over = "3 - Over 2.5 85%";
+                $val->over = "Over 2.5 85%";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
+                (($val->home_str) >= 2.5)
+                && ($val->home_atk > 30)
+                && ($val->away_def < 8)
+            ) {
+                // $val->over = "2 - Over 2.5 90%";
+                $val->over = "Over 2.5 90%";
                 $overs[] = $val;
             }
         }
@@ -339,7 +346,8 @@ class MotibetkPredicts extends Controller
                 (($val->home_atk) > 40)
                 && (($val->away_def) < 7)
             ) {
-                $val->over = "4 - Over 2.5 95%";
+                // $val->over = "4 - Over 2.5 95%";
+                $val->over = "Over 2.5 95%";
                 $overs[] = $val;
             }
         }
