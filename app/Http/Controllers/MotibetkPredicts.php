@@ -28,7 +28,7 @@ class MotibetkPredicts extends Controller
         $date = date('Y-m-d');
         $qDate = Carbon::today();
         $matches = Analysis::whereDate('created_at', $qDate)->orderBy('match_time')->get();
-        // $matches = Analysis::whereDate('created_at', $qDate->subDays(2))->get();
+        // $matches = Analysis::whereDate('created_at', $qDate)->get();
         foreach($matches as $match){
             $code = '';
             foreach($decodedJson->result as $key => $value){
@@ -110,6 +110,7 @@ class MotibetkPredicts extends Controller
                 && (($val->home_atk) >= 21)
                 && (($val->away_atk) >= 21)
                 && ($val->home_str > $val->away_str)
+                && ($val->away_opp_str >= 1.5)
             ) {
                 $val->btts = "BTTS 90%";
                 $bttss[] = $val;
@@ -266,6 +267,7 @@ class MotibetkPredicts extends Controller
                 && (($val->home_atk) >= 21)
                 && (($val->away_atk) >= 21)
                 && ($val->home_str > $val->away_str)
+                && ($val->away_opp_str >= 1.5)
             ) {
                 $val->btts = "BTTS 90%";
                 $bttss[] = $val;
