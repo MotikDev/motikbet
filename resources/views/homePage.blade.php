@@ -105,9 +105,9 @@
             <div class="col">
                 <h3 class="text-center">
                     Winning Predictions
-                    <small>
+                    {{-- <small>
                         <sup class="badge badge-pill badge-success small">95%</sup>
-                    </small>
+                    </small> --}}
                 </h3>
                 <table class="mx-auto table-light w-100">
                     <thead class="bg-primary text-white text-center mx-auto">
@@ -155,9 +155,9 @@
             <div class="col">
                 <h3 class="text-center">
                     Over Predictions
-                    <small>
+                    {{-- <small>
                         <sup class="badge badge-pill badge-warning small">80%</sup>
-                    </small>
+                    </small> --}}
                 </h3>
                 <table class="mx-auto table-light w-100">
                     <thead class="bg-primary text-white text-center mx-auto">
@@ -189,7 +189,7 @@
                                         {{-- {{ $over->away_team }} --}}
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $over->over }}</td>
+                                <td class="text-center">{!! $over->over !!}</td>
                                 <td class="text-center">{{ $over->result }}</td>
                             </tr>
                         @endforeach
@@ -206,9 +206,9 @@
             <div class="col">
                 <h3 class="text-center">
                     BTTS Predictions
-                    <small>
+                    {{-- <small>
                         <sup class="badge badge-pill badge-warning small">80%</sup>
-                    </small>
+                    </small> --}}
                 </h3>
                 <table class="mx-auto table-light w-100">
                     <thead class="bg-primary text-white text-center mx-auto">
@@ -239,7 +239,7 @@
                                         {{ $btts->teams }} 
                                     </div>
                                 </td>
-                                <td class="text-center">{{ $btts->btts }}</td>
+                                <td class="text-center">{!! $btts->btts !!}</td>
                                 <td class="text-center">{{ $btts->result }}</td>
                             </tr>
                         @endforeach

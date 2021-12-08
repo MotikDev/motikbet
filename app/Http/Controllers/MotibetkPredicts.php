@@ -112,7 +112,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_str > $val->away_str)
                 && ($val->away_opp_str >= 1.5)
             ) {
-                $val->btts = "BTTS 90%";
+                $val->btts = "BTTS &nbsp &nbsp 90%";
                 $bttss[] = $val;
             }
         }
@@ -125,7 +125,7 @@ class MotibetkPredicts extends Controller
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
             ) {
-                $val->over = "Over 1.5 95%";
+                $val->over = "Over 1.5 &nbsp &nbsp 95%";
                 $overs[] = $val;
             }
         }
@@ -139,7 +139,7 @@ class MotibetkPredicts extends Controller
                 && ($val->attack_diff < 24)
             ) {
                 // $val->over = "1 - Over 2.5 80%";
-                $val->over = "Over 2.5 80%";
+                $val->over = "Over 2.5 &nbsp &nbsp 80%";
                 $overs[] = $val;
             }
         }
@@ -151,7 +151,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_str < $val->away_str)
             ) {
                 // $val->over = "3 - Over 2.5 85%";
-                $val->over = "Over 2.5 85%";
+                $val->over = "Over 2.5 &nbsp &nbsp 85%";
                 $overs[] = $val;
             }
         }
@@ -162,7 +162,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_def < 8)
             ) {
                 // $val->over = "2 - Over 2.5 90%";
-                $val->over = "Over 2.5 90%";
+                $val->over = "Over 2.5 &nbsp &nbsp 90%";
                 $overs[] = $val;
             }
         }
@@ -172,7 +172,7 @@ class MotibetkPredicts extends Controller
                 && (($val->away_def) < 7)
             ) {
                 // $val->over = "4 - Over 2.5 95%";
-                $val->over = "Over 2.5 95%";
+                $val->over = "Over 2.5 &nbsp &nbsp 95%";
                 $overs[] = $val;
             }
         }
@@ -287,7 +287,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_str > $val->away_str)
                 && ($val->away_opp_str >= 1.5)
             ) {
-                $val->btts = "BTTS 90%";
+                $val->btts = "BTTS &nbsp &nbsp 90%";
                 $bttss[] = $val;
             }
         }
@@ -300,7 +300,7 @@ class MotibetkPredicts extends Controller
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
             ) {
-                $val->over = "Over 1.5 95%";
+                $val->over = "Over 1.5 &nbsp &nbsp 95%";
                 $overs[] = $val;
             }
         }
@@ -314,7 +314,7 @@ class MotibetkPredicts extends Controller
                 && ($val->attack_diff < 24)
             ) {
                 // $val->over = "1 - Over 2.5 80%";
-                $val->over = "Over 2.5 80%";
+                $val->over = "Over 2.5 &nbsp &nbsp 80%";
                 $overs[] = $val;
             }
         }
@@ -326,7 +326,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_str < $val->away_str)
             ) {
                 // $val->over = "3 - Over 2.5 85%";
-                $val->over = "Over 2.5 85%";
+                $val->over = "Over 2.5 &nbsp &nbsp 85%";
                 $overs[] = $val;
             }
         }
@@ -337,7 +337,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_def < 8)
             ) {
                 // $val->over = "2 - Over 2.5 90%";
-                $val->over = "Over 2.5 90%";
+                $val->over = "Over 2.5 &nbsp &nbsp 90%";
                 $overs[] = $val;
             }
         }
@@ -347,7 +347,7 @@ class MotibetkPredicts extends Controller
                 && (($val->away_def) < 7)
             ) {
                 // $val->over = "4 - Over 2.5 95%";
-                $val->over = "Over 2.5 95%";
+                $val->over = "Over 2.5 &nbsp &nbsp 95%";
                 $overs[] = $val;
             }
         }
