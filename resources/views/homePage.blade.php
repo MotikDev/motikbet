@@ -123,7 +123,7 @@
                     </thead>
                     <tbody>
                         @foreach ( $winnings as $index => $winning)
-                            <tr class="mb-3">
+                            <tr class="mb-5">
                                 <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
                                 <td class="text-center">
                                     <div>
@@ -173,7 +173,7 @@
                     </thead>
                     <tbody>
                         @foreach ( $overs as $index => $over)
-                            <tr>
+                            <tr class="mb-5">
                                 <td class="text-center d-none d-lg-table-cell">{{ $index+1 }}</td>
                                 <td class="text-center">
                                     <div>

@@ -27,8 +27,8 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         $date = date('Y-m-d');
         $qDate = Carbon::today();
-        $matches = Analysis::whereDate('created_at', $qDate)->orderBy('match_time')->get();
-        // $matches = Analysis::whereDate('created_at', $qDate)->get();
+        // $matches = Analysis::whereDate('created_at', $qDate)->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $qDate)->get();
         foreach($matches as $match){
             $code = '';
             foreach($decodedJson->result as $key => $value){
@@ -120,8 +120,8 @@ class MotibetkPredicts extends Controller
             if (
                 (($val->home_atk) > 21)
                 && (($val->away_atk) > 21)
-                && (($val->home_str) >= 1.2)
-                && (($val->away_str) >= 1.2 && ($val->away_str) < 2)
+                && (($val->home_str) >= 1.3)
+                && (($val->away_str) >= 1.3 && ($val->away_str) < 2)
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
             ) {
@@ -201,8 +201,8 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         // $date = date('Y-m-d');
         $qDate = Carbon::today();
-        $matches = Analysis::whereDate('created_at', $date)->orderBy('match_time')->get();
-        // $matches = Analysis::whereDate('created_at', $date)->get();
+        // $matches = Analysis::whereDate('created_at', $date)->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $date)->get();
 
         foreach($matches as $match){
             $code = '';
@@ -287,7 +287,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_str > $val->away_str)
                 && ($val->away_opp_str >= 1.5)
             ) {
-                $val->btts = "BTTS &nbsp &nbsp 90%";
+                $val->btts = "BTTS &nbsp 90%";
                 $bttss[] = $val;
             }
         }
@@ -295,12 +295,12 @@ class MotibetkPredicts extends Controller
             if (
                 (($val->home_atk) > 21)
                 && (($val->away_atk) > 21)
-                && (($val->home_str) >= 1.2)
-                && (($val->away_str) >= 1.2 && ($val->away_str) < 2)
+                && (($val->home_str) >= 1.3)
+                && (($val->away_str) >= 1.3 && ($val->away_str) < 2)
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
             ) {
-                $val->over = "Over 1.5 &nbsp &nbsp 95%";
+                $val->over = "Over 1.5 &nbsp 95%";
                 $overs[] = $val;
             }
         }
@@ -314,7 +314,7 @@ class MotibetkPredicts extends Controller
                 && ($val->attack_diff < 24)
             ) {
                 // $val->over = "1 - Over 2.5 80%";
-                $val->over = "Over 2.5 &nbsp &nbsp 80%";
+                $val->over = "Over 2.5 &nbsp 80%";
                 $overs[] = $val;
             }
         }
@@ -326,7 +326,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_str < $val->away_str)
             ) {
                 // $val->over = "3 - Over 2.5 85%";
-                $val->over = "Over 2.5 &nbsp &nbsp 85%";
+                $val->over = "Over 2.5 &nbsp 85%";
                 $overs[] = $val;
             }
         }
@@ -337,7 +337,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_def < 8)
             ) {
                 // $val->over = "2 - Over 2.5 90%";
-                $val->over = "Over 2.5 &nbsp &nbsp 90%";
+                $val->over = "Over 2.5 &nbsp 90%";
                 $overs[] = $val;
             }
         }
@@ -347,7 +347,7 @@ class MotibetkPredicts extends Controller
                 && (($val->away_def) < 7)
             ) {
                 // $val->over = "4 - Over 2.5 95%";
-                $val->over = "Over 2.5 &nbsp &nbsp 95%";
+                $val->over = "Over 2.5 &nbsp 95%";
                 $overs[] = $val;
             }
         }
