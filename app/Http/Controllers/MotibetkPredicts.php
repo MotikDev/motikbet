@@ -118,6 +118,20 @@ class MotibetkPredicts extends Controller
         }
         foreach ($matches as $row => $val) {
             if (
+                (($val->home_atk) > 21)
+                && (($val->away_atk) > 21)
+                && (($val->home_str) >= 1.2)
+                && (($val->away_str) >= 1.2)
+                && (($val->away_str) < 2)
+                && (($val->home_opp_str) >= 1.3)
+                && (($val->away_opp_str) >= 1.3)
+            ) {
+                $val->over = "Over 1.5 95%";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
                 (($val->def_add) < 16)
                 && (($val->attack_add) > 49)
                 && (($val->home_atk > $val->away_atk))
@@ -165,6 +179,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_atk < 40)
                 && ($val->home_def > 9)
                 && ($val->away_def > 9)
+                && ($val->country != 'Japan')
             ) {
                 $val->over = "Under 3.5";
                 $overs[] = $val;
@@ -275,6 +290,20 @@ class MotibetkPredicts extends Controller
         }
         foreach ($matches as $row => $val) {
             if (
+                (($val->home_atk) > 21)
+                && (($val->away_atk) > 21)
+                && (($val->home_str) >= 1.2)
+                && (($val->away_str) >= 1.2)
+                && (($val->away_str) < 2)
+                && (($val->home_opp_str) >= 1.3)
+                && (($val->away_opp_str) >= 1.3)
+            ) {
+                $val->over = "Over 1.5 95%";
+                $overs[] = $val;
+            }
+        }
+        foreach ($matches as $row => $val) {
+            if (
                 (($val->def_add) < 16)
                 && (($val->attack_add) > 49)
                 && (($val->home_atk > $val->away_atk))
@@ -322,6 +351,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_atk < 40)
                 && ($val->home_def > 9)
                 && ($val->away_def > 9)
+                && ($val->country != 'Japan')
             ) {
                 $val->over = "Under 3.5";
                 $overs[] = $val;
