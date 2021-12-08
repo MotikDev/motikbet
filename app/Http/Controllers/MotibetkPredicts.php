@@ -121,8 +121,7 @@ class MotibetkPredicts extends Controller
                 (($val->home_atk) > 21)
                 && (($val->away_atk) > 21)
                 && (($val->home_str) >= 1.2)
-                && (($val->away_str) >= 1.2)
-                && (($val->away_str) < 2)
+                && (($val->away_str) >= 1.2 && ($val->away_str) < 2)
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
             ) {
@@ -293,8 +292,7 @@ class MotibetkPredicts extends Controller
                 (($val->home_atk) > 21)
                 && (($val->away_atk) > 21)
                 && (($val->home_str) >= 1.2)
-                && (($val->away_str) >= 1.2)
-                && (($val->away_str) < 2)
+                && (($val->away_str) >= 1.2 && ($val->away_str) < 2)
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
             ) {
