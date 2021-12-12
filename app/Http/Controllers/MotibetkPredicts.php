@@ -170,7 +170,10 @@ class MotibetkPredicts extends Controller
             if (
                 (($val->home_atk) > 21)
                 && (($val->away_atk) > 21)
+                && (($val->away_def) < 10)
+                && (($val->home_def) < 10)
                 && (($val->home_atk - $val->away_atk) >= 9)
+                && (($val->home_atk - $val->away_atk) < 20)
                 && ($val->home_str < $val->away_str)
             ) {
                 // $val->over = "3 - Over 2.5 85%";
@@ -368,7 +371,10 @@ class MotibetkPredicts extends Controller
             if (
                 (($val->home_atk) > 21)
                 && (($val->away_atk) > 21)
+                && (($val->away_def) < 10)
+                && (($val->home_def) < 10)
                 && (($val->home_atk - $val->away_atk) >= 9)
+                && (($val->home_atk - $val->away_atk) < 20)
                 && ($val->home_str < $val->away_str)
             ) {
                 // $val->over = "3 - Over 2.5 85%";
