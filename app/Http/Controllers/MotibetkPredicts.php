@@ -53,6 +53,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_str >= 1.5)
                 && ($val->away_atk <= 20)
                 && ($val->away_opp_str < $val->home_str)
+                && ($val->away_str <= 1)
                 // (($val->home_str) >= 2)
                 // && ($val->away_str <= 1)
                 // && ($val->home_atk >= 29)
@@ -84,6 +85,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_str >= 1.5)
                 && ($val->home_atk <= 20)
                 && ($val->home_opp_str < $val->away_str)
+                && ($val->home_str <= 1)
                 // (($val->away_str) >= 1.5)
                 // && ($val->home_str <= 1)
                 // && ($val->away_atk >= 29)
@@ -103,19 +105,19 @@ class MotibetkPredicts extends Controller
                 // $winnings[] = $val;
             }
         }
-        foreach ($matches as $row => $val) {
-            if (
-                ($val->home_def < 7)
-                &&($val->away_def < 7)
-                && (($val->home_atk) >= 21)
-                && (($val->away_atk) >= 21)
-                && ($val->home_str > $val->away_str)
-                && ($val->away_opp_str >= 1.5)
-            ) {
-                $val->btts = "BTTS &nbsp &nbsp 90%";
-                $bttss[] = $val;
-            }
-        }
+        // foreach ($matches as $row => $val) {
+        //     if (
+        //         ($val->home_def < 7)
+        //         &&($val->away_def < 7)
+        //         && (($val->home_atk) >= 21)
+        //         && (($val->away_atk) >= 21)
+        //         && ($val->home_str > $val->away_str)
+        //         && ($val->away_opp_str >= 1.5)
+        //     ) {
+        //         $val->btts = "BTTS &nbsp &nbsp 90%";
+        //         $bttss[] = $val;
+        //     }
+        // }
         foreach ($matches as $row => $val) {
             if (
                 (($val->home_atk) > 21)
@@ -124,6 +126,7 @@ class MotibetkPredicts extends Controller
                 && (($val->away_str) >= 1.3 && ($val->away_str) < 2)
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
+                && (($val->attack_diff) > 7 || ($val->attack_diff) < -7)
             ) {
                 $val->over = "Over 1.5 &nbsp &nbsp 95%";
                 $overs[] = $val;
@@ -137,6 +140,8 @@ class MotibetkPredicts extends Controller
                 && ($val->h2h_winner >= 0)
                 && ($val->away_atk >= 20.5)
                 && ($val->attack_diff < 24)
+                && ($val->home_atk >= 1.3)
+                && ($val->away_atk >= 1)
             ) {
                 // $val->over = "1 - Over 2.5 80%";
                 $val->over = "Over 2.5 &nbsp &nbsp 80%";
@@ -170,6 +175,8 @@ class MotibetkPredicts extends Controller
             if (
                 (($val->home_atk) > 40)
                 && (($val->away_def) < 7)
+                && (($val->home_opp_atk) >= 1)
+                && (($val->home_str - $val->away_str) >= 1)
             ) {
                 // $val->over = "4 - Over 2.5 95%";
                 $val->over = "Over 2.5 &nbsp &nbsp 95%";
@@ -178,7 +185,7 @@ class MotibetkPredicts extends Controller
         }
         foreach ($matches as $row => $val) {
             if (
-                (($val->attack_diff) < -10)
+                (($val->attack_diff) < -10 && ($val->attack_diff) > -15)
                 && ($val->away_atk < 40)
                 && ($val->home_def > 9)
                 && ($val->away_def > 9)
@@ -227,6 +234,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_opp_str > 1)
                 && ($val->home_str >= 1.5)
                 && ($val->away_atk <= 20)
+                && ($val->away_str <= 1)
                 && ($val->away_opp_str < $val->home_str)
                 // (($val->home_str) >= 2)
                 // && ($val->away_str <= 1)
@@ -258,6 +266,7 @@ class MotibetkPredicts extends Controller
                 && ($val->away_opp_str > 1)
                 && ($val->away_str >= 1.5)
                 && ($val->home_atk <= 20)
+                && ($val->home_str <= 1)
                 && ($val->home_opp_str < $val->away_str)
                 // (($val->away_str) >= 1.5)
                 // && ($val->home_str <= 1)
@@ -278,19 +287,19 @@ class MotibetkPredicts extends Controller
                 // $winnings[] = $val;
             }
         }
-        foreach ($matches as $row => $val) {
-            if (
-                ($val->home_def < 7)
-                &&($val->away_def < 7)
-                && (($val->home_atk) >= 21)
-                && (($val->away_atk) >= 21)
-                && ($val->home_str > $val->away_str)
-                && ($val->away_opp_str >= 1.5)
-            ) {
-                $val->btts = "BTTS &nbsp 90%";
-                $bttss[] = $val;
-            }
-        }
+        // foreach ($matches as $row => $val) {
+        //     if (
+        //         ($val->home_def < 7)
+        //         &&($val->away_def < 7)
+        //         && (($val->home_atk) >= 21)
+        //         && (($val->away_atk) >= 21)
+        //         && ($val->home_str > $val->away_str)
+        //         && ($val->away_opp_str >= 1.5)
+        //     ) {
+        //         $val->btts = "BTTS &nbsp 90%";
+        //         $bttss[] = $val;
+        //     }
+        // }
         foreach ($matches as $row => $val) {
             if (
                 (($val->home_atk) > 21)
@@ -299,6 +308,7 @@ class MotibetkPredicts extends Controller
                 && (($val->away_str) >= 1.3 && ($val->away_str) < 2)
                 && (($val->home_opp_str) >= 1.3)
                 && (($val->away_opp_str) >= 1.3)
+                && (($val->attack_diff) > 7 || ($val->attack_diff) < -7)
             ) {
                 $val->over = "Over 1.5 &nbsp 95%";
                 $overs[] = $val;
@@ -312,6 +322,8 @@ class MotibetkPredicts extends Controller
                 && ($val->h2h_winner >= 0)
                 && ($val->away_atk >= 20.5)
                 && ($val->attack_diff < 24)
+                && ($val->home_atk >= 1.3)
+                && ($val->away_atk >= 1)
             ) {
                 // $val->over = "1 - Over 2.5 80%";
                 $val->over = "Over 2.5 &nbsp 80%";
@@ -345,6 +357,8 @@ class MotibetkPredicts extends Controller
             if (
                 (($val->home_atk) > 40)
                 && (($val->away_def) < 7)
+                && (($val->home_opp_atk) >= 1)
+                && (($val->home_str - $val->away_str) >= 1)
             ) {
                 // $val->over = "4 - Over 2.5 95%";
                 $val->over = "Over 2.5 &nbsp 95%";
@@ -353,7 +367,7 @@ class MotibetkPredicts extends Controller
         }
         foreach ($matches as $row => $val) {
             if (
-                (($val->attack_diff) < -10)
+                (($val->attack_diff) < -10 && ($val->attack_diff) > -15)
                 && ($val->away_atk < 40)
                 && ($val->home_def > 9)
                 && ($val->away_def > 9)
