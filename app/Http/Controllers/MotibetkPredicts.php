@@ -140,8 +140,8 @@ class MotibetkPredicts extends Controller
                 && ($val->h2h_winner >= 0)
                 && ($val->away_atk >= 20.5)
                 && ($val->attack_diff < 24)
-                && ($val->home_atk >= 1.3)
-                && ($val->away_atk >= 1)
+                && ($val->home_str >= 1.3)
+                && ($val->away_str >= 1)
             ) {
                 // $val->over = "1 - Over 2.5 80%";
                 $val->over = "Over 2.5 &nbsp &nbsp 80%";
@@ -322,8 +322,8 @@ class MotibetkPredicts extends Controller
                 && ($val->h2h_winner >= 0)
                 && ($val->away_atk >= 20.5)
                 && ($val->attack_diff < 24)
-                && ($val->home_atk >= 1.3)
-                && ($val->away_atk >= 1)
+                && ($val->home_str >= 1.3)
+                && ($val->away_str >= 1)
             ) {
                 // $val->over = "1 - Over 2.5 80%";
                 $val->over = "Over 2.5 &nbsp 80%";
