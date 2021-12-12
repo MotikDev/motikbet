@@ -106,7 +106,7 @@ class MotibetkPredicts extends Controller
             }
         }
 
-        $bttsQ = Analysis::on('mysqlBtts')->where('created_at', $qDate)->orderBy('match_time')->get();
+        $bttsQ = Analysis::on('mysqlBtts')->whereDate('created_at', $qDate)->orderBy('match_time')->get();
         // $bttsQ = Analysis::on('mysqlBtts')->whereDate('created_at', $date)->get();
         foreach ($bttsQ as $row => $val) {
             if (
@@ -304,7 +304,7 @@ class MotibetkPredicts extends Controller
                 // $winnings[] = $val;
             }
         }
-        $bttsQ = Analysis::on('mysqlBtts')->where('created_at', $date)->orderBy('match_time')->get();
+        $bttsQ = Analysis::on('mysqlBtts')->whereDate('created_at', $date)->orderBy('match_time')->get();
         // $bttsQ = Analysis::on('mysqlBtts')->whereDate('created_at', $date)->get();
         foreach ($bttsQ as $row => $val) {
             if (
