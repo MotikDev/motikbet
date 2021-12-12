@@ -116,6 +116,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_atk >= 2)
                 && ($val->home_atk <= 3.5)
                 && ($val->home_def <= 1)
+                && ($val->home_def >= 0.2)
             ) {
                 $val->btts = "BTTS";
                 $bttss[] = $val;
@@ -314,6 +315,7 @@ class MotibetkPredicts extends Controller
                 && ($val->home_atk >= 2)
                 && ($val->home_atk <= 3.5)
                 && ($val->home_def <= 1)
+                && ($val->home_def >= 0.2)
             ) {
                 $val->btts = "BTTS";
                 $bttss[] = $val;
