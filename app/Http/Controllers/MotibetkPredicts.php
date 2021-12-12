@@ -105,6 +105,22 @@ class MotibetkPredicts extends Controller
                 // $winnings[] = $val;
             }
         }
+
+        $bttsQ = BTTS::on('mysqlBtts')->where('created_at',  $qDate)->orderBy('match_time')->get();
+        foreach ($bttsQ as $row => $val) {
+            if (
+                ($val->away_atk >= 1.5)
+                && ($val->away_atk < 3)
+                && ($val->away_def > 1.2)
+                && ($val->home_atk >= 2)
+                && ($val->home_atk <= 3.5)
+                && ($val->home_def <= 1)
+            ) {
+                $val->btts = "BTTS";
+                $bttss[] = $val;
+            }
+        }
+
         // foreach ($matches as $row => $val) {
         //     if (
         //         ($val->home_def < 7)
@@ -285,6 +301,20 @@ class MotibetkPredicts extends Controller
                 }
                 // $val->winning = "2";
                 // $winnings[] = $val;
+            }
+        }
+        $bttsQ = BTTS::on('mysqlBtts')->where('created_at', $date)->orderBy('match_time')->get();
+        foreach ($bttsQ as $row => $val) {
+            if (
+                ($val->away_atk >= 1.5)
+                && ($val->away_atk < 3)
+                && ($val->away_def > 1.2)
+                && ($val->home_atk >= 2)
+                && ($val->home_atk <= 3.5)
+                && ($val->home_def <= 1)
+            ) {
+                $val->btts = "BTTS";
+                $bttss[] = $val;
             }
         }
         // foreach ($matches as $row => $val) {
