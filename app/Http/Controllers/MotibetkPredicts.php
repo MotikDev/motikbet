@@ -27,8 +27,8 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         $date = date('Y-m-d');
         $qDate = Carbon::today();
-        $matches = Analysis::whereDate('created_at', $qDate)->orderBy('match_time')->get();
-        // $matches = Analysis::whereDate('created_at', $qDate)->get();
+        // $matches = Analysis::whereDate('created_at', $qDate)->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $qDate)->get();
         foreach($matches as $match){
             $code = '';
             foreach($decodedJson->result as $key => $value){
@@ -106,7 +106,8 @@ class MotibetkPredicts extends Controller
             }
         }
 
-        $bttsQ = BTTS::on('mysqlBtts')->where('created_at',  $qDate)->orderBy('match_time')->get();
+        $bttsQ = BTTS::on('mysqlBtts')->where('created_at', $qDate)->orderBy('match_time')->get();
+        // $bttsQ = Analysis::on('mysqlBtts')->whereDate('created_at', $date)->get();
         foreach ($bttsQ as $row => $val) {
             if (
                 ($val->away_atk >= 1.5)
@@ -224,8 +225,8 @@ class MotibetkPredicts extends Controller
         $decodedJson = json_decode($string);
         // $date = date('Y-m-d');
         $qDate = Carbon::today();
-        $matches = Analysis::whereDate('created_at', $date)->orderBy('match_time')->get();
-        // $matches = Analysis::whereDate('created_at', $date)->get();
+        // $matches = Analysis::whereDate('created_at', $date)->orderBy('match_time')->get();
+        $matches = Analysis::whereDate('created_at', $date)->get();
 
         foreach($matches as $match){
             $code = '';
@@ -304,6 +305,7 @@ class MotibetkPredicts extends Controller
             }
         }
         $bttsQ = BTTS::on('mysqlBtts')->where('created_at', $date)->orderBy('match_time')->get();
+        // $bttsQ = Analysis::on('mysqlBtts')->whereDate('created_at', $date)->get();
         foreach ($bttsQ as $row => $val) {
             if (
                 ($val->away_atk >= 1.5)
